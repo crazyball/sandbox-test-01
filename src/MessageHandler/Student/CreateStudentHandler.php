@@ -27,6 +27,6 @@ class CreateStudentHandler implements MessageHandlerInterface
             throw new NotFoundHttpException('No classroom available.');
         }
 
-        $this->studentRepository->createStudent($createStudent->getFirstName(), $createStudent->getLastName(), $classRooms[0]);
+        $this->studentRepository->createStudent($createStudent->getFirstName(), $createStudent->getLastName(), $createStudent->getEmail(), $classRooms[0]);
     }
 }

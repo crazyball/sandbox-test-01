@@ -4,9 +4,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\ClassroomRepository;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\PersistentCollection;
 
 /**
  * @ORM\Entity(repositoryClass=ClassroomRepository::class)
@@ -33,7 +31,7 @@ class Classroom
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Student", mappedBy="classroom")
      */
-    private $students;
+    private array $students;
 
     public function __construct()
     {

@@ -19,11 +19,12 @@ class StudentRepository extends ServiceEntityRepository
         parent::__construct($registry, Student::class);
     }
 
-    public function createStudent($firstName, $lastName, $classroomId)
+    public function createStudent($firstName, $lastName, $email, $classroomId)
     {
         $student = new Student();
         $student->setFirstName($firstName);
         $student->setLastName($lastName);
+        $student->setEmail($email);
         $student->setClassroom($classroomId);
 
         $this->_em->persist($student);

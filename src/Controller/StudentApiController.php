@@ -15,6 +15,7 @@ use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class StudentApiController
 {
@@ -22,10 +23,17 @@ class StudentApiController
 
     private SerializerInterface $serializer;
 
-    public function __construct(MessageBusInterface $messageBus, SerializerInterface $serializer)
+    private ValidatorInterface $validator;
+
+    public function __construct(
+        MessageBusInterface $messageBus,
+        SerializerInterface $serializer,
+        ValidatorInterface $validator
+    )
     {
         $this->messageBus = $messageBus;
         $this->serializer = $serializer;
+        $this->validator  = $validator;
     }
 
     /**
@@ -41,12 +49,15 @@ class StudentApiController
 
         $firstName = $data['firstName'];
         $lastName  = $data['lastName'];
+        $email  = $data['email'];
 
-        if (empty($firstName) || empty($lastName)) {
-            throw new NotFoundHttpException('Expecting mandatory parameters.');
+        $createStudentMessage = new CreateStudent($firstName, $lastName, $email);
+
+        $errors = $this->validator->validate($createStudentMessage);
+        if (count($errors) > 0) {
+            return new JsonResponse($errors, Response::HTTP_BAD_REQUEST);
         }
 
-        $createStudentMessage = new CreateStudent($firstName, $lastName);
         $this->handle($createStudentMessage);
 
         return new JsonResponse(['status' => 'Student created'], Response::HTTP_CREATED);

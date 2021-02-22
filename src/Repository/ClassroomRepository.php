@@ -20,6 +20,8 @@ class ClassroomRepository extends ServiceEntityRepository
     }
 
     /**
+     * Return classrooms with less than 30 students in it (slots availables)
+     *
      * @return Classroom[]|array
      */
     public function findWithDisponibilities()

@@ -49,7 +49,7 @@ class StudentApiController
 
         $firstName = $data['firstName'];
         $lastName  = $data['lastName'];
-        $email  = $data['email'];
+        $email = $data['email'];
 
         $createStudentMessage = new CreateStudent($firstName, $lastName, $email);
 

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\MessageHandler\Student;
 
+use App\Entity\Student;
 use App\Message\Student\UpdateStudent;
 use App\Repository\StudentRepository;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
@@ -16,7 +17,7 @@ class UpdateStudentHandler implements MessageHandlerInterface
         $this->studentRepository = $studentRepository;
     }
 
-    public function __invoke(UpdateStudent $updateStudent)
+    public function __invoke(UpdateStudent $updateStudent): ?Student
     {
         $student = $this->studentRepository->find($updateStudent->getId());
 
@@ -33,5 +34,7 @@ class UpdateStudentHandler implements MessageHandlerInterface
         }
 
         $this->studentRepository->updateStudent($student);
+
+        return $student;
     }
 }

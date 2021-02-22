@@ -19,14 +19,8 @@ class StudentRepository extends ServiceEntityRepository
         parent::__construct($registry, Student::class);
     }
 
-    public function createStudent($firstName, $lastName, $email, $classroomId)
+    public function createStudent(Student $student)
     {
-        $student = new Student();
-        $student->setFirstName($firstName);
-        $student->setLastName($lastName);
-        $student->setEmail($email);
-        $student->setClassroom($classroomId);
-
         $this->_em->persist($student);
         $this->_em->flush();
     }
@@ -42,33 +36,4 @@ class StudentRepository extends ServiceEntityRepository
         $this->_em->remove($student);
         $this->_em->flush();
     }
-
-    // /**
-    //  * @return Student[] Returns an array of Student objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Student
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

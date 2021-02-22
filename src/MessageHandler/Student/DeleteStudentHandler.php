@@ -16,9 +16,9 @@ class DeleteStudentHandler implements MessageHandlerInterface
         $this->studentRepository = $studentRepository;
     }
 
-    public function __invoke(DeleteStudent $displayStudent): void
+    public function __invoke(DeleteStudent $deleteStudent): void
     {
-        $student = $this->studentRepository->find($displayStudent->getId());
+        $student = $this->studentRepository->find($deleteStudent->getId());
 
         if (null === $student) {
             throw new \RuntimeException('Student not found');

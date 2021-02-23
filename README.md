@@ -29,18 +29,22 @@ access api with given url (usually http://localhost:8000)
 ## Routes
 
 ```
- ---------------- -------- -------- ------ --------------------------
-Name              Method   Scheme   Host   Path
- ---------------- -------- -------- ------ --------------------------
-add_student       POST     ANY      ANY    /students
-delete_student    DELETE   ANY      ANY    /students
-get_student       GET      ANY      ANY    /students
-update_student    PUT      ANY      ANY    /students
-add_classroom     POST     ANY      ANY    /classrooms
-delete_classroom  DELETE   ANY      ANY    /classrooms
-get_classroom     GET      ANY      ANY    /classrooms
-update_classroom  PUT      ANY      ANY    /classrooms
- ---------------- -------- -------- ------ --------------------------
+ ------------------ -------- -------- ------ --------------------------
+  Name               Method   Scheme   Host   Path                     
+ ------------------ -------- -------- ------ --------------------------
+  _preview_error     ANY      ANY      ANY    /_error/{code}.{_format}
+  add_classroom      POST     ANY      ANY    /classrooms
+  delete_classroom   DELETE   ANY      ANY    /classrooms/{id}
+  list_classrooms    GET      ANY      ANY    /classrooms
+  get_classroom      GET      ANY      ANY    /classrooms/{id}
+  update_classroom   PUT      ANY      ANY    /classrooms/{id}
+  add_student        POST     ANY      ANY    /students
+  delete_student     DELETE   ANY      ANY    /students/{id}
+  list_students      GET      ANY      ANY    /students
+  get_student        GET      ANY      ANY    /students/{id}
+  update_student     PUT      ANY      ANY    /students/{id}
+ ------------------ -------- -------- ------ --------------------------
+
 ```
 
 

@@ -30,19 +30,22 @@ access api with given url (usually http://localhost:8000)
 
 ```
  ---------------- -------- -------- ------ --------------------------
-Name             Method   Scheme   Host   Path
+Name              Method   Scheme   Host   Path
  ---------------- -------- -------- ------ --------------------------
-add_student      POST     ANY      ANY    /students
-delete_student   DELETE   ANY      ANY    /students
-get_student      GET      ANY      ANY    /students
-update_student   PUT      ANY      ANY    /students
+add_student       POST     ANY      ANY    /students
+delete_student    DELETE   ANY      ANY    /students
+get_student       GET      ANY      ANY    /students
+update_student    PUT      ANY      ANY    /students
+add_classroom     POST     ANY      ANY    /classrooms
+delete_classroom  DELETE   ANY      ANY    /classrooms
+get_classroom     GET      ANY      ANY    /classrooms
+update_classroom  PUT      ANY      ANY    /classrooms
  ---------------- -------- -------- ------ --------------------------
 ```
 
 
 ## Todo (improvements)
 
-- TESTS !!!!!
 - Docker implementation
 - Use of ParamFetcher on controller to fill DTOs
 - Use of AMQP / Redis or equivalent for asynchronous actions (stats calculation etc.)

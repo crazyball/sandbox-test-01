@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
+use RuntimeException;
 
 class UpdateStudentHandlerTest extends TestCase
 {
@@ -21,15 +22,6 @@ class UpdateStudentHandlerTest extends TestCase
      * @var StudentRepository|ObjectProphecy
      */
     private $studentRepository;
-
-    protected function setUp(): void
-    {
-        $this->studentRepository = $this->prophesize(StudentRepository::class);
-
-        $this->updateStudentHandler = new UpdateStudentHandler(
-            $this->studentRepository->reveal()
-        );
-    }
 
     public function testUpdateNameOfExistingStudent(): void
     {
@@ -54,8 +46,8 @@ class UpdateStudentHandlerTest extends TestCase
 
         $updatedStudent = $this->updateStudentHandler->__invoke($updateStudent);
 
-        $this->assertEquals('obiwan', $updatedStudent->getFirstName());
-        $this->assertEquals('kenobi', $updatedStudent->getLastName());
+        self::assertEquals('obiwan', $updatedStudent->getFirstName());
+        self::assertEquals('kenobi', $updatedStudent->getLastName());
     }
 
     public function testUpdateFirstNameOfNotExistingStudent(): void
@@ -71,12 +63,21 @@ class UpdateStudentHandlerTest extends TestCase
             ->shouldBeCalled()
             ->willReturn(null);
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $this->studentRepository
             ->updateStudent(Argument::any())
             ->shouldNotBeCalled();
 
-       $this->updateStudentHandler->__invoke($updateStudent);
+        $this->updateStudentHandler->__invoke($updateStudent);
+    }
+
+    protected function setUp(): void
+    {
+        $this->studentRepository = $this->prophesize(StudentRepository::class);
+
+        $this->updateStudentHandler = new UpdateStudentHandler(
+            $this->studentRepository->reveal()
+        );
     }
 }

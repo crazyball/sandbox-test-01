@@ -16,8 +16,8 @@ class CreateStudentTest extends TestCase
             "anakin@darkside.com"
         );
 
-        $this->assertEquals("anakin", $createStudent->getFirstName());
-        $this->assertEquals("skywalker", $createStudent->getLastName());
-        $this->assertEquals("anakin@darkside.com", $createStudent->getEmail());
+        self::assertEquals("anakin", $createStudent->getFirstName());
+        self::assertEquals("skywalker", $createStudent->getLastName());
+        self::assertEquals("anakin@darkside.com", $createStudent->getEmail());
     }
 }

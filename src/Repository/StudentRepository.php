@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Repository;
 
@@ -14,23 +15,46 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class StudentRepository extends ServiceEntityRepository
 {
+    /**
+     * StudentRepository constructor.
+     *
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Student::class);
     }
 
+    /**
+     * @param Student $student
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function createStudent(Student $student)
     {
         $this->_em->persist($student);
         $this->_em->flush();
     }
 
+    /**
+     * @param Student $student
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function updateStudent(Student $student)
     {
         $this->_em->persist($student);
         $this->_em->flush();
     }
 
+    /**
+     * @param Student $student
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function deleteStudent(Student $student)
     {
         $this->_em->remove($student);

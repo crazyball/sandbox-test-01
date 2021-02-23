@@ -20,7 +20,43 @@ class ClassroomRepository extends ServiceEntityRepository
     }
 
     /**
-     * Return classrooms with less than 30 students in it (slots availables)
+     * @param Classroom $classroom
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function createClassroom(Classroom $classroom)
+    {
+        $this->_em->persist($classroom);
+        $this->_em->flush();
+    }
+
+    /**
+     * @param Classroom $classroom
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function updateClassroom(Classroom $classroom)
+    {
+        $this->_em->persist($classroom);
+        $this->_em->flush();
+    }
+
+    /**
+     * @param Classroom $classroom
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function deleteClassroom(Classroom $classroom)
+    {
+        $this->_em->remove($classroom);
+        $this->_em->flush();
+    }
+
+    /**
+     * Return classrooms with less than 30 classrooms in it (slots availables)
      *
      * @return Classroom[]|array
      */
@@ -29,7 +65,7 @@ class ClassroomRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('c');
 
         return $query
-            ->join('c.students', 's')
+            ->join('c.classrooms', 's')
             ->groupBy('s.classroom')
             ->having($query->expr()->lte('COUNT(c)', 30))
             ->getQuery()

@@ -21,15 +21,6 @@ class DisplayStudentHandlerTest extends TestCase
      */
     private $studentRepository;
 
-    protected function setUp(): void
-    {
-        $this->studentRepository = $this->prophesize(StudentRepository::class);
-
-        $this->displayStudentHandler = new DisplayStudentHandler(
-            $this->studentRepository->reveal()
-        );
-    }
-
     public function testHandleMessageExistingStudent(): void
     {
         $displayStudent = new DisplayStudent(42);
@@ -41,7 +32,7 @@ class DisplayStudentHandlerTest extends TestCase
 
         $student = $this->displayStudentHandler->__invoke($displayStudent);
 
-        $this->assertInstanceOf(Student::class, $student);
+        self::assertInstanceOf(Student::class, $student);
     }
 
     public function testHandleMessageNotExistingStudent(): void
@@ -55,6 +46,15 @@ class DisplayStudentHandlerTest extends TestCase
 
         $student = $this->displayStudentHandler->__invoke($displayStudent);
 
-        $this->assertNull($student);
+        self::assertNull($student);
+    }
+
+    protected function setUp(): void
+    {
+        $this->studentRepository = $this->prophesize(StudentRepository::class);
+
+        $this->displayStudentHandler = new DisplayStudentHandler(
+            $this->studentRepository->reveal()
+        );
     }
 }

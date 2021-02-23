@@ -16,8 +16,8 @@ class UpdateStudentTest extends TestCase
             "skywalker"
         );
 
-        $this->assertEquals("anakin", $updateStudent->getFirstName());
-        $this->assertEquals("skywalker", $updateStudent->getLastName());
-        $this->assertEquals(42, $updateStudent->getId());
+        self::assertEquals("anakin", $updateStudent->getFirstName());
+        self::assertEquals("skywalker", $updateStudent->getLastName());
+        self::assertEquals(42, $updateStudent->getId());
     }
 }

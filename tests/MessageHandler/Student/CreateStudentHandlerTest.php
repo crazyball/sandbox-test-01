@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
-use \RuntimeException;
+use RuntimeException;
 
 class CreateStudentHandlerTest extends TestCase
 {
@@ -29,17 +29,6 @@ class CreateStudentHandlerTest extends TestCase
      * @var StudentRepository|ObjectProphecy
      */
     private $studentRepository;
-
-    protected function setUp(): void
-    {
-        $this->classroomRepository = $this->prophesize(ClassroomRepository::class);
-        $this->studentRepository = $this->prophesize(StudentRepository::class);
-
-        $this->createStudentHandler = new CreateStudentHandler(
-          $this->classroomRepository->reveal(),
-          $this->studentRepository->reveal()
-        );
-    }
 
     public function testHandleMessageWithClassroomAvailable(): void
     {
@@ -84,5 +73,16 @@ class CreateStudentHandlerTest extends TestCase
         $this->expectException(RuntimeException::class);
 
         $this->createStudentHandler->__invoke($createStudent);
+    }
+
+    protected function setUp(): void
+    {
+        $this->classroomRepository = $this->prophesize(ClassroomRepository::class);
+        $this->studentRepository = $this->prophesize(StudentRepository::class);
+
+        $this->createStudentHandler = new CreateStudentHandler(
+            $this->classroomRepository->reveal(),
+            $this->studentRepository->reveal()
+        );
     }
 }

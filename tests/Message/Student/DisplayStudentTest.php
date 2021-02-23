@@ -12,6 +12,6 @@ class DisplayStudentTest extends TestCase
     {
         $displayStudent = new DisplayStudent(42);
 
-        $this->assertEquals(42, $displayStudent->getId());
+        self::assertEquals(42, $displayStudent->getId());
     }
 }

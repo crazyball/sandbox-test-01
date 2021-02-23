@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
+use RuntimeException;
 
 class DeleteStudentHandlerTest extends TestCase
 {
@@ -22,15 +23,6 @@ class DeleteStudentHandlerTest extends TestCase
      * @var StudentRepository|ObjectProphecy
      */
     private $studentRepository;
-
-    protected function setUp(): void
-    {
-        $this->studentRepository = $this->prophesize(StudentRepository::class);
-
-        $this->deleteStudentHandler = new DeleteStudentHandler(
-            $this->studentRepository->reveal()
-        );
-    }
 
     public function testHandleMessageExistingStudent(): void
     {
@@ -61,8 +53,17 @@ class DeleteStudentHandlerTest extends TestCase
             ->deleteStudent(Argument::type('integer'))
             ->shouldNotBeCalled();
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $this->deleteStudentHandler->__invoke($deleteStudent);
+    }
+
+    protected function setUp(): void
+    {
+        $this->studentRepository = $this->prophesize(StudentRepository::class);
+
+        $this->deleteStudentHandler = new DeleteStudentHandler(
+            $this->studentRepository->reveal()
+        );
     }
 }

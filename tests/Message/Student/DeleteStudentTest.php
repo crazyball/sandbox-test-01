@@ -12,6 +12,6 @@ class DeleteStudentTest extends TestCase
     {
         $updateStudent = new DeleteStudent(42);
 
-        $this->assertEquals(42, $updateStudent->getId());
+        self::assertEquals(42, $updateStudent->getId());
     }
 }

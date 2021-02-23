@@ -9,14 +9,14 @@ jobs:
   build-test:
     name: Symfony 5.2 (PHP ${{ matrix.php-versions }})
     runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_ROOT_PASSWORD: root
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+#    services:
+#      mysql:
+#        image: mysql:5.7
+#        env:
+#          MYSQL_ROOT_PASSWORD: root
+#        ports:
+#          - 3306:3306
+#        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     strategy:
       fail-fast: true
       matrix:
@@ -76,11 +76,11 @@ jobs:
         if: matrix.php-versions == '7.4'
 
       ## —— Tests ———————————————————————————————————————————————————————————
-      - name: Create database and schema
-        run: bin/console doctrine:database:create && bin/console doctrine:migration:migrate
+#      - name: Create database and schema
+#        run: bin/console doctrine:database:create && bin/console doctrine:migration:migrate
 
-      - name: Load fixtures
-        run: bin/console doctrine:fixtures:load
+#      - name: Load fixtures
+#        run: bin/console doctrine:fixtures:load
 
       - name: PHPUnit Tests
         uses: php-actions/phpunit@v2

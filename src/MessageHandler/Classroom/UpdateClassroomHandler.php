@@ -25,7 +25,7 @@ class UpdateClassroomHandler implements MessageHandlerInterface
             throw new \RuntimeException('Classroom not found');
         }
 
-        if($updateClassroom->getName()) {
+        if ($updateClassroom->getName()) {
             $classroom->setName($updateClassroom->getName());
         }
 

@@ -49,7 +49,6 @@ class AppFixtures extends Fixture
         $professor->setLastName($this->faker->lastName);
         $professor->setClassroom($classroom);
         $this->manager->persist($professor);
-
     }
 
     /**

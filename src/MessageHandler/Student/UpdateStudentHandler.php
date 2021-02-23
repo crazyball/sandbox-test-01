@@ -25,7 +25,7 @@ class UpdateStudentHandler implements MessageHandlerInterface
             throw new \RuntimeException('Student not found');
         }
 
-        if($updateStudent->getFirstName()) {
+        if ($updateStudent->getFirstName()) {
             $student->setFirstName($updateStudent->getFirstName());
         }
 

@@ -24,7 +24,7 @@ class CreateStudentHandler implements MessageHandlerInterface
     public function __invoke(CreateStudent $createStudent)
     {
         $classRooms = $this->classroomRepository->findWithDisponibilities();
-        if(empty($classRooms)) {
+        if (empty($classRooms)) {
             throw new RuntimeException('No classroom available.');
         }
 

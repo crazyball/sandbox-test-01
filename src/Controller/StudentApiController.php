@@ -29,8 +29,7 @@ class StudentApiController
         MessageBusInterface $messageBus,
         SerializerInterface $serializer,
         ValidatorInterface $validator
-    )
-    {
+    ) {
         $this->messageBus = $messageBus;
         $this->serializer = $serializer;
         $this->validator  = $validator;

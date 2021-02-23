@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Message\Student\CreateStudent;
 use App\Message\Student\DeleteStudent;
 use App\Message\Student\DisplayStudent;
+use App\Message\Student\ListStudents;
 use App\Message\Student\UpdateStudent;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,46 +64,47 @@ class StudentApiController
     }
 
     /**
-     * @Route("/students", name="delete_student", methods={"DELETE"})
-     * @param Request $request
+     * @Route("/students/{id}", name="delete_student", methods={"DELETE"})
+     * @param string $id
      *
      * @return JsonResponse
-     * @throws \JsonException
      */
-    public function remove(Request $request): JsonResponse
+    public function remove(string $id): JsonResponse
     {
-        $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
-
-        $id = $data['id'];
-
-        if (empty($id)) {
-            throw new NotFoundHttpException('Expecting mandatory parameters.');
-        }
-
-        $deleteStudentMessage = new DeleteStudent($id);
+        $deleteStudentMessage = new DeleteStudent((int) $id);
         $this->handle($deleteStudentMessage);
 
         return new JsonResponse(['status' => 'Student deleted'], Response::HTTP_ACCEPTED);
     }
 
     /**
-     * @Route("/students", name="get_student", methods={"GET"})
-     * @param Request $request
+     * @Route("/students", name="list_students", methods={"GET"})
      *
      * @return Response
-     * @throws \JsonException
      */
-    public function get(Request $request): Response
+    public function list(): Response
     {
-        $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        $listStudents = new ListStudents();
+        $students = $this->handle($listStudents);
 
-        $id = $data['id'];
+        return new Response($this->serializer->serialize($students, 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+            },
+            'ignored_attributes' => ['classroom']
+        ]), Response::HTTP_OK);
+    }
 
-        if (empty($id)) {
-            throw new NotFoundHttpException('Expecting mandatory parameters.');
-        }
-
-        $displayStudentMessage = new DisplayStudent($id);
+    /**
+     * @Route("/students/{id}", name="get_student", methods={"GET"})
+     *
+     * @param string $id
+     *
+     * @return Response
+     */
+    public function get(string $id): Response
+    {
+        $displayStudentMessage = new DisplayStudent((int) $id);
         $student = $this->handle($displayStudentMessage);
 
         if (null === $student) {
@@ -118,24 +120,24 @@ class StudentApiController
     }
 
     /**
-     * @Route("/students", name="update_student", methods={"PUT"})
+     * @Route("/students/{id}", name="update_student", methods={"PUT"})
      * @param Request $request
+     * @param string  $id
      *
      * @return JsonResponse
      * @throws \JsonException
      */
-    public function update(Request $request): JsonResponse
+    public function update(Request $request, string $id): JsonResponse
     {
         $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
-        $id = $data['id'];
         $firstName = $data['firstName'];
         $lastName = $data['lastName'];
         if (empty($firstName) || empty($lastName)) {
             throw new NotFoundHttpException('Expecting mandatory parameters.');
         }
 
-        $createStudentMessage = new UpdateStudent($id, $firstName, $lastName);
+        $createStudentMessage = new UpdateStudent((int) $id, $firstName, $lastName);
         $this->handle($createStudentMessage);
 
         return new JsonResponse(['status' => 'Student updated'], Response::HTTP_ACCEPTED);

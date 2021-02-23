@@ -31,7 +31,7 @@ class Classroom
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Student", mappedBy="classroom")
      */
-    private array $students;
+    private $students;
 
     public function __construct()
     {

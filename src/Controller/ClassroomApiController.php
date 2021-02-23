@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Message\Classroom\CreateClassroom;
 use App\Message\Classroom\DeleteClassroom;
 use App\Message\Classroom\DisplayClassroom;
+use App\Message\Classroom\ListClassrooms;
 use App\Message\Classroom\UpdateClassroom;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,46 +62,46 @@ class ClassroomApiController
     }
 
     /**
-     * @Route("/classrooms", name="delete_classroom", methods={"DELETE"})
-     * @param Request $request
+     * @Route("/classrooms/{id}", name="delete_classroom", methods={"DELETE"})
+     * @param string $id
      *
      * @return JsonResponse
-     * @throws \JsonException
      */
-    public function remove(Request $request): JsonResponse
+    public function remove(string $id): JsonResponse
     {
-        $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
-
-        $id = $data['id'];
-
-        if (empty($id)) {
-            throw new NotFoundHttpException('Expecting mandatory parameters.');
-        }
-
-        $deleteClassroomMessage = new DeleteClassroom($id);
+        $deleteClassroomMessage = new DeleteClassroom((int) $id);
         $this->handle($deleteClassroomMessage);
 
         return new JsonResponse(['status' => 'Classroom deleted'], Response::HTTP_ACCEPTED);
     }
 
     /**
-     * @Route("/classrooms", name="get_classroom", methods={"GET"})
-     * @param Request $request
+     * @Route("/classrooms", name="list_classrooms", methods={"GET"})
      *
      * @return Response
-     * @throws \JsonException
      */
-    public function get(Request $request): Response
+    public function list(): Response
     {
-        $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        $listClassrooms = new ListClassrooms();
+        $classrooms = $this->handle($listClassrooms);
 
-        $id = $data['id'];
+        return new Response($this->serializer->serialize($classrooms, 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+            },
+            'ignored_attributes' => ['students']
+        ]), Response::HTTP_OK);
+    }
 
-        if (empty($id)) {
-            throw new NotFoundHttpException('Expecting mandatory parameters.');
-        }
-
-        $displayClassroomMessage = new DisplayClassroom($id);
+    /**
+     * @Route("/classrooms/{id}", name="get_classroom", methods={"GET"})
+     * @param string $id
+     *
+     * @return Response
+     */
+    public function get(string $id): Response
+    {
+        $displayClassroomMessage = new DisplayClassroom((int) $id);
         $classroom = $this->handle($displayClassroomMessage);
 
         if (null === $classroom) {
@@ -115,23 +116,23 @@ class ClassroomApiController
     }
 
     /**
-     * @Route("/classrooms", name="update_classroom", methods={"PUT"})
+     * @Route("/classrooms/{id}", name="update_classroom", methods={"PUT"})
      * @param Request $request
+     * @param string  $id
      *
      * @return JsonResponse
      * @throws \JsonException
      */
-    public function update(Request $request): JsonResponse
+    public function update(Request $request, string $id): JsonResponse
     {
         $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
-        $id = $data['id'];
         $name = $data['name'];
         if (empty($name)) {
             throw new NotFoundHttpException('Expecting mandatory parameters.');
         }
 
-        $createClassroomMessage = new UpdateClassroom($id, $name);
+        $createClassroomMessage = new UpdateClassroom((int) $id, $name);
         $this->handle($createClassroomMessage);
 
         return new JsonResponse(['status' => 'Classroom updated'], Response::HTTP_ACCEPTED);

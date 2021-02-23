@@ -1,5 +1,7 @@
 {
     "type": "project",
+    "name": "crazyball/kartable-test-app",
+    "description": "simple api to admin classroom / students and tests",
     "license": "proprietary",
     "minimum-stability": "dev",
     "prefer-stable": true,

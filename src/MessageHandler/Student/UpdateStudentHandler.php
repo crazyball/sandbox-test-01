@@ -29,7 +29,7 @@ class UpdateStudentHandler implements MessageHandlerInterface
             $student->setFirstName($updateStudent->getFirstName());
         }
 
-        if($updateStudent->getLastName()) {
+        if ($updateStudent->getLastName()) {
             $student->setLastName($updateStudent->getLastName());
         }
 

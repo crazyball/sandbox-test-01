@@ -59,20 +59,15 @@ jobs:
       - name: Install Composer dependencies
         run: composer install
 
-      # —— Symfony ——————————————————————————————————————————————————————————
-      - name: Check Symfony requirements
-        run: vendor/bin/requirements-checker
-
-
       ## —— Coding standards ————————————————————————————————————————————————
       # Can't handle PHP8 for now
       - name: Coding standards checks (php_codesniffer + php-cs-fixer)
-        run: make cs
+        run: vendor/bin/phpcs
         if: matrix.php-versions == '7.4'
 
       ## —— Static analysis —————————————————————————————————————————————————
       - name: Static analysis of PHP code (PHPStan)
-        run: make static-analysis
+        run: vendor/bin/phpstan
         if: matrix.php-versions == '7.4'
 
       ## —— Tests ———————————————————————————————————————————————————————————

@@ -68,7 +68,7 @@ jobs:
 
       ## —— Static analysis —————————————————————————————————————————————————
       - name: Static analysis of PHP code (PHPStan)
-        run: vendor/bin/phpstan
+        run: vendor/bin/phpstan ./src
         if: matrix.php-versions == '7.4'
 
       ## —— Tests ———————————————————————————————————————————————————————————

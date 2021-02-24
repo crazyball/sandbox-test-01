@@ -89,7 +89,9 @@ class ClassroomRepository extends ServiceEntityRepository
           (SELECT COUNT(*) FROM exam_question eq WHERE eq.exam_id = e.id)
     AND c.id = $classroomId;
 SQL
-                , $rsm)
+                ,
+                $rsm
+            )
             ->getSingleScalarResult();
     }
 }

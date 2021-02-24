@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * @Route("/api")
  */
-class StudentApiController
+class StudentApiController extends AbstractController
 {
     use HandleTrait;
 
@@ -90,12 +90,16 @@ class StudentApiController
         $listStudents = new ListStudents();
         $students = $this->handle($listStudents);
 
-        return new Response($this->serializer->serialize($students, 'json', [
+        $jsonContent = $this->getJsonSerializer()->serialize($students, 'json', [
             'circular_reference_handler' => function ($object) {
                 return $object->getId();
-            },
-            'ignored_attributes' => ['classroom']
-        ]), Response::HTTP_OK);
+            }
+        ]);
+
+        $response = new Response($jsonContent);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 
     /**
@@ -114,12 +118,16 @@ class StudentApiController
             throw new NotFoundHttpException('Student not found.');
         }
 
-        return new Response($this->serializer->serialize($student, 'json', [
+        $jsonContent = $this->getJsonSerializer()->serialize($student, 'json', [
             'circular_reference_handler' => function ($object) {
                 return $object->getId();
-            },
-            'ignored_attributes' => ['classroom']
-        ]), Response::HTTP_OK);
+            }
+        ]);
+
+        $response = new Response($jsonContent);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 
     /**

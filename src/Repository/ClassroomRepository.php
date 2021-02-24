@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Classroom;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -60,7 +61,7 @@ class ClassroomRepository extends ServiceEntityRepository
      *
      * @return Classroom[]|array
      */
-    public function findWithDisponibilities()
+    public function findWithDisponibilities(): iterable
     {
         $query = $this->createQueryBuilder('c');
 
@@ -71,5 +72,24 @@ class ClassroomRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function haveCurrentExamOpened(int $classroomId): bool
+    {
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('nbExams', 'nbExams', 'integer');
+
+        return $this->getEntityManager()
+            ->createNativeQuery(
+<<<SQL
+    SELECT COUNT(*) as nbExams
+    FROM classroom c 
+    LEFT JOIN exam e ON e.classroom_id = c.id
+    WHERE (SELECT COUNT(*) FROM exam_session es WHERE es.exam_id = e.id AND es.answer IS NULL) <> 
+          (SELECT COUNT(*) FROM exam_question eq WHERE eq.exam_id = e.id)
+    AND c.id = $classroomId;
+SQL
+                , $rsm)
+            ->getSingleScalarResult();
     }
 }

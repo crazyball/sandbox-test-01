@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use App\Repository\ClassroomRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ClassroomRepository::class)
@@ -20,6 +21,7 @@ class Classroom
 
     /**
      * @ORM\Column(type="string", length=30)
+     * @Assert\NotBlank
      */
     private ?string $name;
 
@@ -30,8 +32,12 @@ class Classroom
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Student", mappedBy="classroom")
+     * @Assert\Count(
+     *      max = 30,
+     *      maxMessage = "You can add more than {{ limit }} students to each classrooms"
+     * )
      */
-    private $students;
+    private iterable $students;
 
     public function __construct()
     {
@@ -70,17 +76,17 @@ class Classroom
     }
 
     /**
-     * @return array
+     * @return \App\Entity\Student[]
      */
-    public function getStudents()
+    public function getStudents(): iterable
     {
         return $this->students;
     }
 
     /**
-     * @param array $students
+     * @param \App\Entity\Student[] $students
      */
-    public function setStudents($students): void
+    public function setStudents(iterable $students): void
     {
         $this->students = $students;
     }

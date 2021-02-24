@@ -3,8 +3,8 @@
 
 IMPORTANT !!!! 
 
-This application is not intended to be deployed in production but is a technical inventory 
-of several coding methods (TDD, CQRS etc.) and features. This is not optimized (see Toto at bottom of this readme
+This application is not intended to be deployed in production but is a sandbox of technical inventory, 
+several coding methods (TDD, CQRS etc.) and features. This is not optimized (see Todo at bottom of this readme
 to see a list of suggestions / improvements to be made).
 
 ## Requirements 
@@ -34,6 +34,7 @@ access api with given url (usually http://localhost:8000)
 
 ## Features 
 
+- Automatic Testing when code pushed to Github (Github Actions)
 - CRUD for Students / Classrooms
 - Automatic exam generation (select randomly questions from a pool of questions in database)
 - Exam control (only one opened exam by classroom at the same time)

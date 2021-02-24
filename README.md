@@ -32,6 +32,14 @@ symfony serve
 
 access api with given url (usually http://localhost:8000)
 
+## Features 
+
+- CRUD for Students / Classrooms
+- Automatic exam generation (select randomly questions from a pool of questions in database)
+- Exam control (only one opened exam by classroom at the same time)
+- TODO : Exam statistics
+- TODO : Allowing students to answer to exams
+
 ## Routes
 
 ```
@@ -60,10 +68,11 @@ access api with given url (usually http://localhost:8000)
 ## Todo (improvements)
 
 - Docker implementation
+- Use of API Platform (not used here to see some coding methods)
 - Use of ParamFetcher on controller to fill DTOs
 - Use of AMQP / Redis or equivalent for asynchronous actions (stats calculation etc.)
-- Better DDD directories split (Application, Infrastructure, Core)
-- Add Swagger to auto-discover / doc API
-- HATEOS implementation to cover full RESTfull levels schema
-- Authentication
+- Better DDD directories split (Application, InfrastructureBundle, Core, UIBundle)
+- Add Swagger and/or Nelmio APIDoc (implemented with API Platform)
+- HATEOS hypermedia implementation to cover full RESTFUL levels
+- Authentication (Oauth2)
 

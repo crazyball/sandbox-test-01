@@ -33,16 +33,16 @@ access api with given url (usually http://localhost:8000)
   Name               Method   Scheme   Host   Path                     
  ------------------ -------- -------- ------ --------------------------
   _preview_error     ANY      ANY      ANY    /_error/{code}.{_format}
-  add_classroom      POST     ANY      ANY    /classrooms
-  delete_classroom   DELETE   ANY      ANY    /classrooms/{id}
-  list_classrooms    GET      ANY      ANY    /classrooms
-  get_classroom      GET      ANY      ANY    /classrooms/{id}
-  update_classroom   PUT      ANY      ANY    /classrooms/{id}
-  add_student        POST     ANY      ANY    /students
-  delete_student     DELETE   ANY      ANY    /students/{id}
-  list_students      GET      ANY      ANY    /students
-  get_student        GET      ANY      ANY    /students/{id}
-  update_student     PUT      ANY      ANY    /students/{id}
+  add_classroom      POST     ANY      ANY    /api/classrooms
+  delete_classroom   DELETE   ANY      ANY    /api/classrooms/{id}
+  list_classrooms    GET      ANY      ANY    /api/classrooms
+  get_classroom      GET      ANY      ANY    /api/classrooms/{id}
+  update_classroom   PUT      ANY      ANY    /api/classrooms/{id}
+  add_student        POST     ANY      ANY    /api/students
+  delete_student     DELETE   ANY      ANY    /api/students/{id}
+  list_students      GET      ANY      ANY    /api/students
+  get_student        GET      ANY      ANY    /api/students/{id}
+  update_student     PUT      ANY      ANY    /api/students/{id}
  ------------------ -------- -------- ------ --------------------------
 
 ```
@@ -56,4 +56,5 @@ access api with given url (usually http://localhost:8000)
 - Better DDD directories split (Application, Infrastructure, Core)
 - Add Swagger to auto-discover / doc API
 - HATEOS implementation to cover full RESTfull levels scheme
+- Authentication
 

@@ -79,8 +79,4 @@ jobs:
 #        run: bin/console doctrine:fixtures:load
 
       - name: PHPUnit Tests
-        uses: php-actions/phpunit@v2
-        with:
-          bootstrap: vendor/autoload.php
-          configuration: phpunit.xml.dist
-          args: --coverage-text
+        run: ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/

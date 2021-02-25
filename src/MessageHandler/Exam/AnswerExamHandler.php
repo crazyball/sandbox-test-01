@@ -10,7 +10,7 @@ use App\Entity\Student;
 use App\Message\Events\StudentAnsweredExamEvent;
 use App\Message\Exam\AnswerExam;
 use App\Repository\ExamRepository;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 /**
@@ -19,7 +19,7 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 class AnswerExamHandler implements MessageHandlerInterface
 {
     private ExamRepository $examRepository;
-    private EventDispatcherInterface $eventDispatcher;
+    private $eventDispatcher;
 
     public function __construct(
         ExamRepository $examRepository,

@@ -18,7 +18,7 @@ class StudentAnsweredExamListener
         $this->examRepository = $examRepository;
     }
 
-    public function onStudentAnsweredExam(StudentAnsweredExamEvent $event): void
+    public function onStudentAnsweredExam(StudentAnsweredExamEvent $event)
     {
         $exam = $this->examRepository->find($event->getId());
 

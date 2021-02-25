@@ -19,4 +19,10 @@ class ExamSessionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ExamSession::class);
     }
+
+    public function save(ExamSession $examSession): void
+    {
+        $this->getEntityManager()->persist($examSession);
+        $this->getEntityManager()->flush();
+    }
 }

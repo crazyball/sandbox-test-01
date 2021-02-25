@@ -41,6 +41,14 @@ class Question
     }
 
     /**
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
      * @return string
      */
     public function getQuestion(): string

@@ -40,6 +40,12 @@ class Exam
      */
     private $sessions;
 
+    public function __construct()
+    {
+        $this->questions = [];
+        $this->sessions = [];
+    }
+
     /**
      * @return int|null
      */

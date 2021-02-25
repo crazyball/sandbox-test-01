@@ -69,6 +69,7 @@ access api with given url (usually http://localhost:8000)
 ## Todo (improvements)
 
 - Docker implementation
+- Use of more specific Exceptions names instead of RuntimeException
 - Use of API Platform (not used here to see some coding methods)
 - Use of ParamFetcher on controller to fill DTOs
 - Use of AMQP / Redis or equivalent for asynchronous actions (stats calculation etc.)

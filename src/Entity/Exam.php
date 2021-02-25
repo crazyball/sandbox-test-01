@@ -55,6 +55,14 @@ class Exam
     }
 
     /**
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
      * @return Classroom
      */
     public function getClassroom(): Classroom

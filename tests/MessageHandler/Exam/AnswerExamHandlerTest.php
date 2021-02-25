@@ -103,8 +103,10 @@ class AnswerExamHandlerTest extends TestCase
         $dbQuestion = new Question();
         $dbQuestion->setId(10);
         $dbQuestion->setQuestion('Who is Anakin master ?');
+        $dbQuestion->setAnswer('obiwan kenoby');
 
         $dbExam = new Exam();
+        $dbExam->setId(1);
         $dbExam->setClassroom($dbClassroom);
         $dbExam->setQuestions([$dbQuestion]);
 

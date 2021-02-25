@@ -7,6 +7,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class StudentAnsweredExamEvent extends Event
 {
+    const NAME = 'student.answered_exam';
+
     private int $id;
 
     public function __construct(int $id)

@@ -10,7 +10,7 @@ use App\Entity\Student;
 use App\Message\Events\StudentAnsweredExamEvent;
 use App\Message\Exam\AnswerExam;
 use App\Repository\ExamRepository;
-use Psr\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class AnswerExamHandler implements MessageHandlerInterface
@@ -28,6 +28,8 @@ class AnswerExamHandler implements MessageHandlerInterface
 
     public function __invoke(AnswerExam $answerExam): Exam
     {
+        // TODO : check that session is not already answered
+
         $exam = $this->examRepository->find($answerExam->getExamId());
         if (null === $exam) {
             throw new \RuntimeException('Exam not found');
@@ -52,10 +54,10 @@ class AnswerExamHandler implements MessageHandlerInterface
             $examSessions[] = $examSession;
         }
         $exam->setSessions($examSessions);
-        $this->examRepository->create($exam);
+        //$this->examRepository->create($exam);
 
         // Dispatch Event to stats calculations (student note, exam note etc.)
-        //$this->eventDispatcher->dispatch(new StudentAnsweredExamEvent($exam->getId()));
+        $this->eventDispatcher->dispatch(new StudentAnsweredExamEvent($exam->getId()), StudentAnsweredExamEvent::NAME);
 
         return $exam;
     }

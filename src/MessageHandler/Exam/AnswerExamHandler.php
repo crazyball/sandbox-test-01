@@ -5,6 +5,7 @@ namespace App\MessageHandler\Exam;
 
 use App\Entity\Exam;
 use App\Entity\ExamSession;
+use App\Entity\ExamSessionAnswer;
 use App\Entity\Question;
 use App\Entity\Student;
 use App\Message\Events\StudentAnsweredExamEvent;
@@ -13,9 +14,6 @@ use App\Repository\ExamRepository;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-/**
- * TODO : Split 1 Exam Session into multiple answers (not 1 session per answer)
- */
 class AnswerExamHandler implements MessageHandlerInterface
 {
     private ExamRepository $examRepository;
@@ -43,21 +41,27 @@ class AnswerExamHandler implements MessageHandlerInterface
             throw new \RuntimeException('Exam not associated to this student');
         }
 
-        $examSessions = [];
+        $examSession = new ExamSession();
+        $examSession->setExam($exam);
+        $examSession->setStudent($student);
+
+        $examSessionAnswers = [];
         foreach ($answerExam->getAnswers() as $questionId => $answer) {
-            $examSession = new ExamSession();
-            $examSession->setExam($exam);
             $question = $this->matchQuestion($exam, $questionId);
             if (null === $question) {
                 throw new \RuntimeException('Question to answer not found');
             }
-            $examSession->setQuestion($question);
-            $examSession->setAnswer($answer);
-            $examSession->setIsValid($question->getAnswer() === $answer);
-            $examSessions[] = $examSession;
+
+            $examSessionAnswer = new ExamSessionAnswer();
+            $examSessionAnswer->setQuestion($question);
+            $examSessionAnswer->setAnswer($answer);
+            $examSessionAnswer->setIsValid($question->getAnswer() === $answer);
+            $examSessionAnswers[] = $examSessionAnswer;
         }
-        $exam->setSessions($examSessions);
-        //$this->examRepository->create($exam);
+
+        $examSession->setAnswers($examSessionAnswers);
+        $exam->addSession($examSession);
+        $this->examRepository->create($exam);
 
         // Dispatch Event to stats calculations (student note, exam note etc.)
         $this->eventDispatcher->dispatch(new StudentAnsweredExamEvent($exam->getId()), StudentAnsweredExamEvent::NAME);

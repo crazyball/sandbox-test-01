@@ -40,8 +40,9 @@ class ExamRepository extends ServiceEntityRepository
             ->leftJoin('e.questions', 'q')
             ->leftJoin('c.students', 's')
             ->leftJoin('e.sessions', 'es')
+            ->leftJoin('es.answers', 'esa')
             ->where('s.id = :studentId')
-            ->having("COUNT(es.id) <> COUNT(e.id)")
+            ->having("COUNT(esa.id) <> COUNT(e.id)")
             ->setParameter('studentId', $studentId)
             ->getQuery()
             ->getResult();

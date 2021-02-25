@@ -85,7 +85,7 @@ class ClassroomRepository extends ServiceEntityRepository
     SELECT COUNT(*) as nbExams
     FROM classroom c 
     LEFT JOIN exam e ON e.classroom_id = c.id
-    WHERE (SELECT COUNT(*) FROM exam_session es WHERE es.exam_id = e.id AND es.answer IS NULL) <> 
+    WHERE (SELECT COUNT(*) FROM exam_session es LEFT JOIN exam_session_answer esa ON es.id = esa.exam_session_id WHERE es.exam_id = e.id AND esa.answer IS NULL) <>
           (SELECT COUNT(*) FROM exam_question eq WHERE eq.exam_id = e.id)
     AND c.id = $classroomId;
 SQL

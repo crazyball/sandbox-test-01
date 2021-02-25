@@ -5,7 +5,6 @@ namespace App\Entity;
 
 use App\Repository\ExamSessionRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ExamSessionRepository::class)
@@ -25,21 +24,19 @@ class ExamSession
     private Exam $exam;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Question", inversedBy="students", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Student", cascade={"persist"})
      */
-    private Question $question;
+    private Student $student;
 
     /**
-     * @ORM\Column(type="string", length=250)
-     * @Assert\NotBlank
+     * @ORM\OneToMany(targetEntity="App\Entity\ExamSessionAnswer", mappedBy="examSession", cascade={"persist"})
      */
-    private string $answer;
+    private iterable $answers;
 
-    /**
-     * @ORM\Column(type="boolean")
-     * @Assert\NotBlank
-     */
-    private bool $isValid;
+    public function __construct()
+    {
+        $this->answers = [];
+    }
 
     /**
      * @return int|null
@@ -66,50 +63,34 @@ class ExamSession
     }
 
     /**
-     * @return Question
+     * @return Student
      */
-    public function getQuestion(): Question
+    public function getStudent(): Student
     {
-        return $this->question;
+        return $this->student;
     }
 
     /**
-     * @param Question $question
+     * @param Student $student
      */
-    public function setQuestion(Question $question): void
+    public function setStudent(Student $student): void
     {
-        $this->question = $question;
+        $this->student = $student;
     }
 
     /**
-     * @return string
+     * @return array|iterable
      */
-    public function getAnswer(): string
+    public function getAnswers()
     {
-        return $this->answer;
+        return $this->answers;
     }
 
     /**
-     * @param string $answer
+     * @param array|iterable $answers
      */
-    public function setAnswer(string $answer): void
+    public function setAnswers($answers): void
     {
-        $this->answer = $answer;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isValid(): bool
-    {
-        return $this->isValid;
-    }
-
-    /**
-     * @param bool $isValid
-     */
-    public function setIsValid(bool $isValid): void
-    {
-        $this->isValid = $isValid;
+        $this->answers = $answers;
     }
 }

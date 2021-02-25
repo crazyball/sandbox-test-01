@@ -103,6 +103,14 @@ class Exam
     }
 
     /**
+     * @param ExamSession $examSession
+     */
+    public function addSession(ExamSession $examSession): void
+    {
+        $this->sessions[] = $examSession;
+    }
+
+    /**
      * @param iterable|ExamSession[] $sessions
      */
     public function setSessions(iterable $sessions): void

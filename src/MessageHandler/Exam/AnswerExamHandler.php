@@ -13,6 +13,9 @@ use App\Repository\ExamRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
+/**
+ * TODO : Split 1 Exam Session into multiple answers (not 1 session per answer)
+ */
 class AnswerExamHandler implements MessageHandlerInterface
 {
     private ExamRepository $examRepository;

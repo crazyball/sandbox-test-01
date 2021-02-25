@@ -128,6 +128,8 @@ class ClassroomApiController extends AbstractController
      * @param Request $request
      * @param string  $id
      *
+     * @internal example : '{"name":"xxx"}'
+     *
      * @return JsonResponse
      * @throws \JsonException
      */

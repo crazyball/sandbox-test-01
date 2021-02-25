@@ -27,23 +27,21 @@ class StudentApiController extends AbstractController
 {
     use HandleTrait;
 
-    private SerializerInterface $serializer;
-
     private ValidatorInterface $validator;
 
     public function __construct(
         MessageBusInterface $messageBus,
-        SerializerInterface $serializer,
         ValidatorInterface $validator
     ) {
         $this->messageBus = $messageBus;
-        $this->serializer = $serializer;
         $this->validator  = $validator;
     }
 
     /**
      * @Route("/students", name="add_student", methods={"POST"})
      * @param Request $request
+     *
+     * @internal '{"firstName":"xxx", "lastname":"yyy", "email":"zzz"}'
      *
      * @return JsonResponse
      * @throws \JsonException
@@ -136,6 +134,8 @@ class StudentApiController extends AbstractController
      * @Route("/students/{id}", name="update_student", methods={"PUT"})
      * @param Request $request
      * @param string  $id
+     *
+     * @internal '{"firstName":"xxx", "lastname":"yyy"}'
      *
      * @return JsonResponse
      * @throws \JsonException

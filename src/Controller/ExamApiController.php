@@ -79,6 +79,8 @@ class ExamApiController extends AbstractController
      * @param string $examId
      * @param string $studentId
      *
+     * @internal example : '{"answers": {"4":"1047","5":"302","6":"1232"}}'
+     *
      * @return Response
      */
     public function answerExam(Request $request, string $examId, string $studentId): Response

@@ -61,9 +61,7 @@ access api with given url (usually http://localhost:8000)
   update_student      PUT      ANY      ANY    /api/students/{id}
   find_student_exam   GET      ANY      ANY    /api/students/{id}/exam
  ------------------ -------- -------- ------ --------------------------
-
 ```
-
 
 ## Todo (improvements)
 

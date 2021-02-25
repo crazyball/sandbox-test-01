@@ -1,9 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Repository;
 
 use App\Entity\Exam;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -24,4 +27,26 @@ class ExamRepository extends ServiceEntityRepository
         $this->getEntityManager()->persist($exam);
         $this->getEntityManager()->flush();
     }
+
+    /**
+     * Find active or available exam for given student
+     *
+     * @return Exam|null
+     */
+    public function findExamForStudent(int $studentId): ?Exam
+    {
+        $exams = $this->createQueryBuilder('e')
+            ->leftJoin('e.classroom', 'c')
+            ->leftJoin('e.questions', 'q')
+            ->leftJoin('c.students', 's')
+            ->leftJoin('e.sessions', 'es')
+            ->where('s.id = :studentId')
+            ->having("COUNT(es.id) <> COUNT(e.id)")
+            ->setParameter('studentId', $studentId)
+            ->getQuery()
+            ->getResult();
+
+        return is_array($exams) && count($exams) > 0 ? $exams[0] : null;
+    }
 }
+

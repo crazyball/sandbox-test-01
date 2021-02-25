@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Message\Exam;
 
-
 class CreateExam
 {
     private int $classroom;

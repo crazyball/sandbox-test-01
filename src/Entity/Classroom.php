@@ -39,6 +39,11 @@ class Classroom
      */
     private iterable $students;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Exam", mappedBy="classroom", fetch="LAZY")
+     */
+    private iterable $exams;
+
     public function __construct()
     {
         $this->students = [];
@@ -89,5 +94,13 @@ class Classroom
     public function setStudents(iterable $students): void
     {
         $this->students = $students;
+    }
+
+    /**
+     * @return iterable
+     */
+    public function getExams(): iterable
+    {
+        return $this->exams;
     }
 }

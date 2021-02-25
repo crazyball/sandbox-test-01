@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace App\MessageHandler\Exam;
+namespace App\MessageHandler\Student;
 
 use App\Entity\Exam;
-use App\Message\Exam\ShowExam;
+use App\Message\Student\ShowStudentExam;
 use App\Repository\ExamRepository;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class ShowExamHandler implements MessageHandlerInterface
+class ShowStudentExamHandler implements MessageHandlerInterface
 {
     private ExamRepository $examRepository;
 
@@ -17,8 +17,8 @@ class ShowExamHandler implements MessageHandlerInterface
         $this->examRepository = $examRepository;
     }
 
-    public function __invoke(ShowExam $showExam): ?Exam
+    public function __invoke(ShowStudentExam $showStudentExam): ?Exam
     {
-        return $this->examRepository->find($showExam->getId());
+        return $this->examRepository->findExamForStudent($showStudentExam->getId());
     }
 }

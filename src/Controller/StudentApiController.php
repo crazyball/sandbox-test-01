@@ -3,10 +3,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Exam;
 use App\Message\Student\CreateStudent;
 use App\Message\Student\DeleteStudent;
 use App\Message\Student\DisplayStudent;
 use App\Message\Student\ListStudents;
+use App\Message\Student\ShowStudentExam;
 use App\Message\Student\UpdateStudent;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -152,5 +154,31 @@ class StudentApiController extends AbstractController
         $this->handle($createStudentMessage);
 
         return new JsonResponse(['status' => 'Student updated'], Response::HTTP_ACCEPTED);
+    }
+
+    /**
+     * @Route("/students/{id}/exam", name="find_student_exam", methods={"GET"})
+     * @param string $id
+     *
+     * @return Response
+     */
+    public function findExamForStudent(string $id): Response
+    {
+        $showStudentExam = new ShowStudentExam((int) $id);
+        $exam = $this->handle($showStudentExam);
+        if (null === $exam) {
+            return new Response('No exam in progress', Response::HTTP_NOT_FOUND);
+        }
+
+        $jsonContent = $this->getJsonSerializer()->serialize($exam, 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+            }
+        ]);
+
+        $response = new Response($jsonContent);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 }

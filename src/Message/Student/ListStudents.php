@@ -6,3 +6,4 @@ namespace App\Message\Student;
 class ListStudents
 {
 }
+

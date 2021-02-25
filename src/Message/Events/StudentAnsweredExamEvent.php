@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Message\Events;
 
-class StudentAnsweredEvent
+use Symfony\Contracts\EventDispatcher\Event;
+
+class StudentAnsweredExamEvent extends Event
 {
     private int $id;
 

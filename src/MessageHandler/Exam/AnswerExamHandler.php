@@ -7,7 +7,7 @@ use App\Entity\Exam;
 use App\Entity\ExamSession;
 use App\Entity\Question;
 use App\Entity\Student;
-use App\Message\Events\StudentAnsweredEvent;
+use App\Message\Events\StudentAnsweredExamEvent;
 use App\Message\Exam\AnswerExam;
 use App\Repository\ExamRepository;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -55,7 +55,7 @@ class AnswerExamHandler implements MessageHandlerInterface
         $this->examRepository->create($exam);
 
         // Dispatch Event to stats calculations (student note, exam note etc.)
-        $this->eventDispatcher->dispatch(new StudentAnsweredEvent($exam->getId()));
+        $this->eventDispatcher->dispatch(new StudentAnsweredExamEvent($exam->getId()));
 
         return $exam;
     }

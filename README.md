@@ -34,12 +34,11 @@ access api with given url (usually http://localhost:8000)
 
 ## Features 
 
-- Automatic Testing when code pushed to Github (Github Actions)
+- Automatic Testing when code pushed to Github (Github Actions) (coverage target >= 65%)
 - CRUD for Students / Classrooms
 - Automatic exam generation (select randomly questions from a pool of questions in database)
 - Exam control (only one opened exam by classroom at the same time)
 - TODO : Exam statistics
-- TODO : Allowing students to answer to exams
 
 ## Routes
 
@@ -47,20 +46,20 @@ access api with given url (usually http://localhost:8000)
  ------------------ -------- -------- ------ --------------------------
   Name               Method   Scheme   Host   Path                     
  ------------------ -------- -------- ------ --------------------------
-  _preview_error     ANY      ANY      ANY    /_error/{code}.{_format}
-  add_classroom      POST     ANY      ANY    /api/classrooms
-  delete_classroom   DELETE   ANY      ANY    /api/classrooms/{id}
-  list_classrooms    GET      ANY      ANY    /api/classrooms
-  get_classroom      GET      ANY      ANY    /api/classrooms/{id}
-  update_classroom   PUT      ANY      ANY    /api/classrooms/{id}
-  create_exam        POST     ANY      ANY    /api/exam
-  show_exam          GET      ANY      ANY    /api/exam/{id}
-  add_student        POST     ANY      ANY    /api/students
-  delete_student     DELETE   ANY      ANY    /api/students/{id}
-  list_students      GET      ANY      ANY    /api/students
-  get_student        GET      ANY      ANY    /api/students/{id}
-  update_student     PUT      ANY      ANY    /api/students/{id}
-
+  add_classroom       POST     ANY      ANY    /api/classrooms
+  delete_classroom    DELETE   ANY      ANY    /api/classrooms/{id}
+  list_classrooms     GET      ANY      ANY    /api/classrooms
+  get_classroom       GET      ANY      ANY    /api/classrooms/{id}
+  update_classroom    PUT      ANY      ANY    /api/classrooms/{id}
+  create_exam         POST     ANY      ANY    /api/exam
+  show_exam           GET      ANY      ANY    /api/exam/{id}
+  answer_exam         POST     ANY      ANY    /api/exam/{examId}/student/{studentId}
+  add_student         POST     ANY      ANY    /api/students
+  delete_student      DELETE   ANY      ANY    /api/students/{id}
+  list_students       GET      ANY      ANY    /api/students
+  get_student         GET      ANY      ANY    /api/students/{id}
+  update_student      PUT      ANY      ANY    /api/students/{id}
+  find_student_exam   GET      ANY      ANY    /api/students/{id}/exam
  ------------------ -------- -------- ------ --------------------------
 
 ```

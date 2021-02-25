@@ -121,10 +121,8 @@ class AnswerExamHandlerTest extends TestCase
 
         $answerExamWithResult = $this->answerExamHandler->__invoke($answerExam);
 
-        self::assertInstanceOf(Exam::class, $answerExamWithResult);
         self::assertCount(1, $answerExamWithResult->getSessions());
     }
-
 
     private function getAnswers(): array
     {

@@ -12,6 +12,7 @@ use App\Repository\StudentRepository;
 
 /**
  * TODO: do not use Listener but asynchronous messaging / queuing to avoid latencies for users
+ * TODO: refacto leaderboard calculation scoring as a service just called by this listener
  */
 class StudentAnsweredExamListener
 {

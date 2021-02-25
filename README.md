@@ -38,7 +38,7 @@ access api with given url (usually http://localhost:8000)
 - CRUD for Students / Classrooms
 - Automatic exam generation (select randomly questions from a pool of questions in database)
 - Exam control (only one opened exam by classroom at the same time)
-- TODO : Exam statistics
+- Exam statistics
 
 ## Routes
 

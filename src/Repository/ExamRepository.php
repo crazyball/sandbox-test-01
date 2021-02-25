@@ -22,10 +22,26 @@ class ExamRepository extends ServiceEntityRepository
         parent::__construct($registry, Exam::class);
     }
 
-    public function create(Exam $exam)
+    public function save(Exam $exam)
     {
         $this->getEntityManager()->persist($exam);
         $this->getEntityManager()->flush();
+    }
+
+    /**
+     * @param int $classroomId
+     *
+     * @return Exam[]|iterable
+     */
+    public function findExamsForClassroom(int $classroomId): iterable
+    {
+        return $this
+            ->createQueryBuilder('e')
+            ->leftJoin('e.classroom', 'c')
+            ->where('c.id = :classroomId')
+            ->setParameter('classroomId', $classroomId)
+            ->getQuery()
+            ->getResult();
     }
 
     /**

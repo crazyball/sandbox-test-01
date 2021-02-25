@@ -61,7 +61,7 @@ class AnswerExamHandler implements MessageHandlerInterface
 
         $examSession->setAnswers($examSessionAnswers);
         $exam->addSession($examSession);
-        $this->examRepository->create($exam);
+        $this->examRepository->save($exam);
 
         // Dispatch Event to stats calculations (student note, exam note etc.)
         $this->eventDispatcher->dispatch(new StudentAnsweredExamEvent($exam->getId()), StudentAnsweredExamEvent::NAME);

@@ -43,6 +43,21 @@ class Student
      */
     private Classroom $classroom;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ExamSession", mappedBy="student", cascade={"persist"})
+     */
+    private $sessions;
+
+    public function __construct()
+    {
+        $this->sessions = [];
+    }
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private int $classroomRank;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -110,5 +125,37 @@ class Student
     public function setClassroom(Classroom $classroom): void
     {
         $this->classroom = $classroom;
+    }
+
+    /**
+     * @return int
+     */
+    public function getClassroomRank(): int
+    {
+        return $this->classroomRank;
+    }
+
+    /**
+     * @param int $classroomRank
+     */
+    public function setClassroomRank(int $classroomRank): void
+    {
+        $this->classroomRank = $classroomRank;
+    }
+
+    /**
+     * @return ExamSession[]|iterable
+     */
+    public function getSessions()
+    {
+        return $this->sessions;
+    }
+
+    /**
+     * @param ExamSession[]|iterable $sessions
+     */
+    public function setSessions($sessions): void
+    {
+        $this->sessions = $sessions;
     }
 }

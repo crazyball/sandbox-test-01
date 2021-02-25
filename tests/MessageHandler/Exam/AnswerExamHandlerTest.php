@@ -118,7 +118,7 @@ class AnswerExamHandlerTest extends TestCase
 
         $this
             ->examRepository
-            ->create(Argument::any())
+            ->save(Argument::any())
             ->willReturn($dbExam);
 
         $answerExamWithResult = $this->answerExamHandler->__invoke($answerExam);

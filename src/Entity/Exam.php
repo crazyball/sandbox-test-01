@@ -40,6 +40,11 @@ class Exam
      */
     private $sessions;
 
+    /**
+     * @ORM\Column(type="decimal", nullable=true)
+     */
+    private $averageScore;
+
     public function __construct()
     {
         $this->questions = [];
@@ -116,5 +121,21 @@ class Exam
     public function setSessions(iterable $sessions): void
     {
         $this->sessions = $sessions;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAverageScore()
+    {
+        return $this->averageScore;
+    }
+
+    /**
+     * @param mixed $averageScore
+     */
+    public function setAverageScore($averageScore): void
+    {
+        $this->averageScore = $averageScore;
     }
 }

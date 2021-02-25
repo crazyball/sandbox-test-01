@@ -33,6 +33,11 @@ class ExamSession
      */
     private iterable $answers;
 
+    /**
+     * @ORM\Column(type="decimal", nullable=true)
+     */
+    private float $score;
+
     public function __construct()
     {
         $this->answers = [];
@@ -79,7 +84,7 @@ class ExamSession
     }
 
     /**
-     * @return array|iterable
+     * @return array|iterable|ExamSessionAnswer[]
      */
     public function getAnswers()
     {
@@ -87,10 +92,26 @@ class ExamSession
     }
 
     /**
-     * @param array|iterable $answers
+     * @param array|iterable|ExamSessionAnswer[] $answers
      */
     public function setAnswers($answers): void
     {
         $this->answers = $answers;
+    }
+
+    /**
+     * @return float
+     */
+    public function getScore(): float
+    {
+        return $this->score;
+    }
+
+    /**
+     * @param float $score
+     */
+    public function setScore(float $score): void
+    {
+        $this->score = $score;
     }
 }

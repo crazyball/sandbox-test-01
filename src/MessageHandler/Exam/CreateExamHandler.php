@@ -37,7 +37,7 @@ class CreateExamHandler implements MessageHandlerInterface
 
         $exam = $this->createExam($createExam->getClassroom());
 
-        $this->examRepository->create($exam);
+        $this->examRepository->save($exam);
 
         return $exam;
     }

@@ -6,6 +6,9 @@ namespace App\Listener;
 use App\Message\Events\StudentAnsweredExamEvent;
 use App\Repository\ExamRepository;
 
+/**
+ * TODO: do not use Listener but asynchronous messaging / queuing to avoid latencies for users
+ */
 class StudentAnsweredExamListener
 {
     protected ExamRepository $examRepository;

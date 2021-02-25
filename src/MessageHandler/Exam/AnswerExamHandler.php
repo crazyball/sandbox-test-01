@@ -55,32 +55,30 @@ class AnswerExamHandler implements MessageHandlerInterface
         $this->examRepository->create($exam);
 
         // Dispatch Event to stats calculations (student note, exam note etc.)
-        $this->eventDispatcher->dispatch(new StudentAnsweredExamEvent($exam->getId()));
+        //$this->eventDispatcher->dispatch(new StudentAnsweredExamEvent($exam->getId()));
 
         return $exam;
     }
 
     private function matchStudent(Exam $exam, $studentId): ?Student
     {
-        $student = array_filter(
-            $exam->getClassroom()->getStudents(),
-            function (Student $e) use (&$studentId) {
-                return $e->getId() == $studentId;
+        foreach ($exam->getClassroom()->getStudents() as $student) {
+            if ($student->getId() == $studentId) {
+                return $student;
             }
-        );
+        }
 
-        return count($student) > 0 ? $student[0] : null;
+        return null;
     }
 
     private function matchQuestion(Exam $exam, $questionId): ?Question
     {
-        $question = array_filter(
-            $exam->getQuestions(),
-            function (Question $e) use (&$questionId) {
-                return $e->getId() == $questionId;
+        foreach ($exam->getQuestions() as $question) {
+            if ($question->getId() == $questionId) {
+                return $question;
             }
-        );
+        }
 
-        return count($question) > 0 ? $question[0] : null;
+        return null;
     }
 }

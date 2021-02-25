@@ -4,7 +4,7 @@
 IMPORTANT !!!! 
 
 This application is not intended to be deployed in production but is a sandbox of technical inventory, 
-several coding methods (TDD, CQRS etc.) and features. This is not optimized (see Todo at bottom of this readme
+several coding methods (TDD, DDD, CQRS etc.) and features. This is not optimized (see Todo at bottom of this readme
 to see a list of suggestions / improvements to be made).
 
 ## Requirements 
@@ -38,7 +38,9 @@ access api with given url (usually http://localhost:8000)
 - CRUD for Students / Classrooms
 - Automatic exam generation (select randomly questions from a pool of questions in database)
 - Exam control (only one opened exam by classroom at the same time)
-- Exam statistics
+- Exam statistics update (only when an exam is finished)
+
+See api routes payloads in controllers methods doc blocks (see Todo for improvements alternatives)
 
 ## Routes
 
@@ -65,13 +67,14 @@ access api with given url (usually http://localhost:8000)
 
 ## Todo (improvements)
 
-- Docker implementation
-- Use of more specific Exceptions names instead of RuntimeException
-- Use of API Platform (not used here to see some coding methods)
-- Use of ParamFetcher on controller to fill DTOs
 - Use of AMQP / Redis or equivalent for asynchronous actions (stats calculation etc.)
+- Store leaderboards in REDIS (way much efficient than sql, method used a lot in gaming code)
 - Better DDD directories split (Application, InfrastructureBundle, Core, UIBundle)
+- Docker implementation (to work on the same environment as preprod / prod app)
+- Use of more specific Exceptions names instead of RuntimeException
+- Use of ParamFetcher on controller to fill DTOs
+- Use of API Platform (not used here to see some coding methods)
 - Add Swagger and/or Nelmio APIDoc (implemented with API Platform)
-- HATEOS hypermedia implementation to cover full RESTFUL levels
-- Authentication (Oauth2)
+- HATEOS hypermedia implementation to cover full RESTFUL levels (implemented with API Platform)
+- Authentication (Oauth2) (implemented with API Platform) 
 

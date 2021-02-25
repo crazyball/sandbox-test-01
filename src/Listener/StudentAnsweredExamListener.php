@@ -24,7 +24,7 @@ class StudentAnsweredExamListener
 
         foreach ($exam->getSessions() as $session) {
             // TODO Calculate stats
-            // Store stats
+            // TODO Store stats
         }
     }
 }

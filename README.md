@@ -1,4 +1,4 @@
-# KARTABLE TEST APP (Dev in Progress)
+# Sandbox test 01 APP (Dev in Progress)
 ---
 
 IMPORTANT !!!! 
@@ -6,6 +6,10 @@ IMPORTANT !!!!
 This application is not intended to be deployed in production but is a sandbox of technical inventory, 
 several coding methods (TDD, DDD, CQRS etc.) and features. This is not optimized (see Todo at bottom of this readme
 to see a list of suggestions / improvements to be made).
+
+## Disclamer
+
+This is a simple implementation of a classroom management system with professors / students and exams (random questions).
 
 ## Requirements 
 
